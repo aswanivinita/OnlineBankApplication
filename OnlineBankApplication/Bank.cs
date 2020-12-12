@@ -29,7 +29,7 @@ namespace OnlineBankApplication
 
         public static IEnumerable<Account> GetAllAccountsByEmailAddress(string emailAddress)
         {
-           return accounts.Where(a => a.EmailAddress == emailAddress);
+            return accounts.Where(a => a.EmailAddress == emailAddress);
         }
     }
 }
