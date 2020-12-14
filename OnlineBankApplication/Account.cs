@@ -13,20 +13,18 @@ namespace OnlineBankApplication
     }
     class Account
     {
-        private static int lastAccountNumber = 0;
         #region Properties
         public string EmailAddress { get; set; }
-        public int AccountNumber { get; }
+        public int AccountNumber { get; set; }
         public TypeOfAccounts AccountType { get; set; }
-        public decimal Balance { get; private set; }
-        public DateTime CreatedDate { get; private set; }
+        public decimal Balance { get;  set; }
+        public DateTime CreatedDate { get;  set; }
 
         #endregion
 
         #region Constructor
         public Account()
         {
-            AccountNumber = ++lastAccountNumber;
             CreatedDate = DateTime.Now;
         }
 
