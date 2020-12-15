@@ -7,8 +7,7 @@ namespace OnlineBankApplication
 {
     static class Bank
     {
-        private static List<Account> accounts = new List<Account>();
-        private static List<Transaction> transactions = new List<Transaction>();
+        private static BankContext db = new BankContext();
         public static Account CreateAccount(string emailAddress, TypeOfAccounts accountType, decimal initialDeposit)
         {
             var account = new Account
@@ -22,7 +21,8 @@ namespace OnlineBankApplication
                 account.Deposit(initialDeposit);
             }
 
-            accounts.Add(account);
+            db.Accounts.Add(account);
+            db.SaveChanges();
 
             return account;
 
@@ -30,12 +30,17 @@ namespace OnlineBankApplication
 
         public static IEnumerable<Account> GetAllAccountsByEmailAddress(string emailAddress)
         {
-            return accounts.Where(a => a.EmailAddress == emailAddress);
+            return db.Accounts.Where(a => a.EmailAddress == emailAddress);
+        }
+
+        public static IEnumerable<Transaction> GetAllTransactionsByAccountNumber(int accountNumber)
+        {
+            return db.Transactions.Where(t => t.AccountNumber == accountNumber).OrderByDescending(t => t.TransactionDate) ;
         }
 
         public static void Deposit(int accountNumber, decimal amount)
         {
-            var account= accounts.SingleOrDefault(a => a.AccountNumber == accountNumber);
+            var account= db.Accounts.SingleOrDefault(a => a.AccountNumber == accountNumber);
 
             if(account ==null)
             {
@@ -56,12 +61,13 @@ namespace OnlineBankApplication
                 
             };
 
-            transactions.Add(transaction);
+            db.Transactions.Add(transaction);
+            db.SaveChanges();
         }
 
         public static void Withdraw(int accountNumber, decimal amount)
         {
-            var account = accounts.SingleOrDefault(a => a.AccountNumber == accountNumber);
+            var account = db.Accounts.SingleOrDefault(a => a.AccountNumber == accountNumber);
 
             if (account == null)
             {
@@ -82,7 +88,8 @@ namespace OnlineBankApplication
 
             };
 
-            transactions.Add(transaction);
+            db.Transactions.Add(transaction);
+            db.SaveChanges();
         }
     }
 }

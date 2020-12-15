@@ -16,6 +16,7 @@ namespace OnlineBankApplication
             Console.WriteLine("2. Deposit");
             Console.WriteLine("3. Withdraw");
             Console.WriteLine("4. Print all Account");
+            Console.WriteLine("5. Print all Transactions");
 
            
             var option = Console.ReadLine();
@@ -82,7 +83,19 @@ namespace OnlineBankApplication
                         PrintAllAccounts();
                         break;
 
+                    case "5":
+                        PrintAllAccounts();
+                        Console.WriteLine("Account Number");
+                        accountNumber = Convert.ToInt32(Console.ReadLine());
 
+                        var transactions = Bank.GetAllTransactionsByAccountNumber(accountNumber);
+
+                        foreach(var transaction in transactions)
+                        {
+                            Console.WriteLine($"ID:{transaction.Id}, CD:{transaction.TransactionDate}, TT: {transaction.TransactionType}, Amount:{transaction.Amount:C}, AN:{transaction.AccountNumber}, Bal:{transaction.Balance:C}");
+                        }
+
+                        break;
                     default:
                         Console.WriteLine("Please select valid option");
                         break;

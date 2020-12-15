@@ -39,6 +39,8 @@ namespace OnlineBankApplication
 
         public void Withdraw(decimal amount)
         {
+            if (amount > Balance)
+                throw new ArgumentOutOfRangeException("amount", "non sufficient funds!");
             Balance -= amount;
         }
 
